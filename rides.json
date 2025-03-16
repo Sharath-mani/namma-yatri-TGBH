@@ -1,0 +1,123 @@
+{
+    "bangalore_south": [
+      {
+        "pickup_location": "Girinagar",
+        "dropoff_location": "Banashankari",
+        "pickup_coordinates": {"lat": 12.9182, "lng": 77.5764},
+        "dropoff_coordinates": {"lat": 12.9280, "lng": 77.5897},
+        "fare": 120
+      },
+      {
+        "pickup_location": "Jayanagar",
+        "dropoff_location": "Madiwala",
+        "pickup_coordinates": {"lat": 12.9357, "lng": 77.5873},
+        "dropoff_coordinates": {"lat": 12.9344, "lng": 77.6226},
+        "fare": 80
+      },
+      {
+        "pickup_location": "HSR Layout",
+        "dropoff_location": "Koramangala",
+        "pickup_coordinates": {"lat": 12.9271, "lng": 77.6463},
+        "dropoff_coordinates": {"lat": 12.9279, "lng": 77.6252},
+        "fare": 100
+      },
+      {
+        "pickup_location": "BTM Layout",
+        "dropoff_location": "Electronic City",
+        "pickup_coordinates": {"lat": 12.9298, "lng": 77.6178},
+        "dropoff_coordinates": {"lat": 12.8530, "lng": 77.6547},
+        "fare": 150
+      }
+    ],
+    "bangalore_north": [
+      {
+        "pickup_location": "Yelahanka",
+        "dropoff_location": "Hebbal",
+        "pickup_coordinates": {"lat": 13.0914, "lng": 77.5984},
+        "dropoff_coordinates": {"lat": 13.0502, "lng": 77.5941},
+        "fare": 130
+      },
+      {
+        "pickup_location": "Sannehalli",
+        "dropoff_location": "Bangalore Airport",
+        "pickup_coordinates": {"lat": 13.1992, "lng": 77.7075},
+        "dropoff_coordinates": {"lat": 13.1986, "lng": 77.7091},
+        "fare": 200
+      },
+      {
+        "pickup_location": "Hennur",
+        "dropoff_location": "Kalyan Nagar",
+        "pickup_coordinates": {"lat": 13.0152, "lng": 77.6511},
+        "dropoff_coordinates": {"lat": 13.0234, "lng": 77.6541},
+        "fare": 90
+      },
+      {
+        "pickup_location": "R.T. Nagar",
+        "dropoff_location": "Malleshwaram",
+        "pickup_coordinates": {"lat": 13.0167, "lng": 77.5885},
+        "dropoff_coordinates": {"lat": 13.0094, "lng": 77.5792},
+        "fare": 70
+      }
+    ],
+    "bangalore_east": [
+      {
+        "pickup_location": "Indiranagar",
+        "dropoff_location": "Whitefield",
+        "pickup_coordinates": {"lat": 12.9744, "lng": 77.6407},
+        "dropoff_coordinates": {"lat": 12.9755, "lng": 77.7497},
+        "fare": 150
+      },
+      {
+        "pickup_location": "Koramangala",
+        "dropoff_location": "Varthur",
+        "pickup_coordinates": {"lat": 12.9279, "lng": 77.6252},
+        "dropoff_coordinates": {"lat": 12.9625, "lng": 77.7485},
+        "fare": 140
+      },
+      {
+        "pickup_location": "Bangalore East",
+        "dropoff_location": "Banaswadi",
+        "pickup_coordinates": {"lat": 12.9716, "lng": 77.6801},
+        "dropoff_coordinates": {"lat": 12.9825, "lng": 77.6627},
+        "fare": 80
+      },
+      {
+        "pickup_location": "KR Puram",
+        "dropoff_location": "Marathahalli",
+        "pickup_coordinates": {"lat": 12.9741, "lng": 77.6963},
+        "dropoff_coordinates": {"lat": 12.9401, "lng": 77.7037},
+        "fare": 100
+      }
+    ],
+    "bangalore_west": [
+      {
+        "pickup_location": "Rajajinagar",
+        "dropoff_location": "Malleswaram",
+        "pickup_coordinates": {"lat": 13.0100, "lng": 77.5640},
+        "dropoff_coordinates": {"lat": 13.0094, "lng": 77.5792},
+        "fare": 50
+      },
+      {
+        "pickup_location": "Magadi Road",
+        "dropoff_location": "Yeshwanthpur",
+        "pickup_coordinates": {"lat": 13.0255, "lng": 77.5600},
+        "dropoff_coordinates": {"lat": 13.0152, "lng": 77.5530},
+        "fare": 60
+      },
+      {
+        "pickup_location": "Basaveshwaranagar",
+        "dropoff_location": "Malleshwaram",
+        "pickup_coordinates": {"lat": 13.0133, "lng": 77.5470},
+        "dropoff_coordinates": {"lat": 13.0094, "lng": 77.5792},
+        "fare": 40
+      },
+      {
+        "pickup_location": "Sampangiramnagar",
+        "dropoff_location": "Peenya",
+        "pickup_coordinates": {"lat": 13.0228, "lng": 77.5399},
+        "dropoff_coordinates": {"lat": 13.0000, "lng": 77.5607},
+        "fare": 80
+      }
+    ]
+  }
+  

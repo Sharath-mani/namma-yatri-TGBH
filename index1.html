@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namma Yatri | Select Zone</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #008000;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .zone-btn {
+            background: linear-gradient(135deg, #00a651, #008000);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            margin: 10px;
+            width: 260px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 2px 4px 10px rgba(0, 128, 0, 0.2);
+            display: block;
+        }
+
+        .zone-btn:hover {
+            background: linear-gradient(135deg, #008000, #006400);
+            box-shadow: 4px 6px 15px rgba(0, 128, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .zone-btn {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="static/unnamed.jpg" alt="Namma Yatri Logo" class="logo">
+
+    <h1>Welcome to Namma Yatri</h1>
+    <p>Select your zone:</p>
+
+    <button class="zone-btn" onclick="window.location.href='/select_zone/bangalore_south'">🚖 Bangalore South</button>
+    <button class="zone-btn" onclick="window.location.href='/select_zone/bangalore_north'">🚖 Bangalore North</button>
+    <button class="zone-btn" onclick="window.location.href='/select_zone/bangalore_east'">🚖 Bangalore East</button>
+    <button class="zone-btn" onclick="window.location.href='/select_zone/bangalore_west'">🚖 Bangalore West</button>
+
+</body>
+</html>

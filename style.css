@@ -1,0 +1,185 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;  /* Use a more modern, app-like font */
+    background-color: #f5f5f5;  /* Soft light background */
+    color: #333;  /* Dark text for readability */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container for Ride List and Smart Score */
+.container {
+    display: flex;
+    flex-wrap: wrap;  /* Allow for wrapping on smaller screens */
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto; /* Center the container */
+}
+
+/* Center the Available Rides Section */
+h2 {
+    font-size: 24px;
+    color: #388e3c;  /* Green color for headings */
+    text-align: center;
+    margin-top: 40px;
+    font-weight: 600;  /* Slightly bold */
+}
+
+/* Ride List */
+.ride-list {
+    flex: 1;
+    background-color: #ffffff;  /* White background for cards */
+    padding: 20px;
+    margin-right: 20px;
+    border-radius: 16px; /* Softer, modern rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;  /* Smooth hover effect */
+}
+
+.ride-list:hover {
+    transform: translateY(-5px);  /* Slight lift on hover */
+}
+
+/* Smart Score Section */
+.score-container {
+    width: 300px;
+    background-color: #ffffff;  /* White background */
+    padding: 20px;
+    border-radius: 16px; /* Softer, modern rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+    margin-bottom: 20px;
+}
+
+/* Ride Buttons */
+button {
+    border: none;
+    padding: 12px 20px;
+    margin: 10px 0;
+    border-radius: 12px;  /* Soft rounded corners */
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;  /* Smooth transition for hover effect */
+    display: block;  /* Ensure buttons stack on different rows */
+    width: 100%;  /* Full width for both buttons */
+}
+
+/* Accept Button - Larger, Green */
+.accept-btn {
+    background-color: #388e3c;  /* Green color */
+    color: white;
+    font-weight: bold;
+    font-size: 18px;  /* Larger text */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+    margin-top: 10px;
+}
+
+.accept-btn:hover {
+    background-color: #66bb6a;  /* Lighter green on hover */
+    transform: translateY(-2px);  /* Slight lift on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);  /* Darker shadow on hover */
+}
+
+/* Reject Button - Slightly Larger, Red */
+.reject-btn {
+    background-color: #f44336;  /* Red color */
+    color: white;
+    font-weight: normal;
+    font-size: 16px;  /* Slightly larger text */
+    padding: 14px 20px;  /* Slightly larger padding for bigger button */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+    margin-top: 10px;
+}
+
+.reject-btn:hover {
+    background-color: #e57373;  /* Lighter red on hover */
+    transform: translateY(-2px);  /* Slight lift on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);  /* Darker shadow on hover */
+}
+
+/* Smart Score Section */
+#smart-score {
+    background-color: #ffffff;  /* White background for Smart Score section */
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 16px;  /* Softer corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+}
+
+/* Map Section */
+#map {
+    margin-top: 20px;
+    border-radius: 16px;  /* Softer corners */
+    width: 100%;
+}
+
+/* Update graph color to red and green */
+canvas {
+    background-color: transparent;  /* Light background for the chart */
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+/* Graph Red and Green Theme */
+#smartScoreChart {
+    background-color: transparent;
+}
+
+.smart-score-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;  /* Stack sections on smaller screens */
+        align-items: center;
+    }
+    
+    .ride-list {
+        margin-right: 0;
+        margin-bottom: 20px;  /* Add space between elements */
+        width: 100%;  /* Make the ride list take full width */
+    }
+
+    .score-container {
+        width: 100%;  /* Make score container take full width */
+    }
+
+    h2 {
+        font-size: 20px;  /* Slightly smaller font size for mobile */
+    }
+    
+}
+/* Add this to your style.css */
+@keyframes popIn {
+    0% {
+        transform: scale(0.5);  /* Start small */
+        opacity: 0;  /* Start invisible */
+    }
+    50% {
+        transform: scale(1.2);  /* Slightly enlarge */
+        opacity: 1;  /* Become visible */
+    }
+    100% {
+        transform: scale(1);  /* Final size */
+        opacity: 1;  /* Full opacity */
+    }
+}
+
+/* Apply this animation to the ride elements */
+.ride {
+    animation: popIn 0.5s ease-out;  /* 0.5 seconds animation */
+    transform-origin: center;  /* Animation centered */
+}

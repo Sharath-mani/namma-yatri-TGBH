@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Rides</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap&v=weekly" async></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .ride-list {
+            width: 60%;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .score-container {
+            width: 30%;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #FFD700;
+            background-color: #222;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .ride {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            text-align: left;
+            border-left: 5px solid #FFD700;
+            transition: 0.3s;
+            animation: popIn 0.5s ease-out;
+        }
+
+        .ride:hover {
+            transform: scale(1.02);
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .accept-btn, .reject-btn {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+
+        .accept-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .reject-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .accept-btn:hover {
+            background-color: #218838;
+        }
+
+        .reject-btn:hover {
+            background-color: #c82333;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        /* Earnings and Deduction Section at the Bottom */
+        .earnings-box {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        .earnings-section {
+            text-align: center;
+            padding: 15px;
+            width: 45%;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .earnings-section h3 { 
+            margin: 0;
+            font-size: 18px; 
+            color: #333;
+        }
+
+        .earnings-section p { 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #28a745; 
+        }
+
+        .deduction p { 
+            color: #dc3545; 
+        }
+
+        /* Rejection Count Section */
+        .earnings-section.rejection-count {
+            text-align: center;
+            padding: 15px;
+            width: 45%;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #rejectionCount {
+            font-size: 22px;
+            font-weight: bold;
+            color: #dc3545;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            width: 80%;
+        }
+
+        /* Table to show earnings and deductions */
+        .earnings-deduction-table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .earnings-deduction-table th, .earnings-deduction-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .earnings-deduction-table th {
+            background-color: #f4f4f4;
+        }
+
+        .earnings-deduction-table td {
+            font-size: 18px;
+        }
+
+        /* END TRIP Button */
+        .end-trip-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .end-trip-btn:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ride-list">
+            <h2>🚖 Available Rides 🚖</h2>
+            <div class="ride-list-container"></div>
+        </div>
+
+        <div class="score-container">
+            <h3>Your Smart Score</h3>
+            <canvas id="smartScoreChart" width="200" height="200"></canvas>
+            <p id="scoreText">Score: 100</p>
+        </div>
+    </div>
+
+    <!-- Map -->
+    <div id="map"></div>
+
+    <!-- Earnings and Deduction Section at the Bottom -->
+    <div class="earnings-box">
+        <div class="earnings-section">
+            <h3>Earnings</h3>
+            <p id="Earnings">₹0</p> <!-- Display Total Earnings -->
+        </div>
+        <div class="earnings-section deduction">
+            <h3>Deduction</h3>
+            <p id="deduction">₹0</p> <!-- Display Total Deduction -->
+        </div>
+        <div class="earnings-section rejection-count">
+            <h3>Rejection Count</h3>
+            <input type="number" id="rejectionCount" value="0" min="0" readonly />
+        </div>
+    </div>
+
+    <!-- Earnings and Deduction Table -->
+    <table class="earnings-deduction-table">
+        <thead>
+            <tr>
+                <th>Total Earnings</th>
+                <th>Total Deduction</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="totalEarnings">₹0</td>
+                <td id="totalDeduction">₹0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- END TRIP Button -->
+    <button class="end-trip-btn" onclick="endTrip()">End Trip</button>
+
+    <script>
+        let smartScore = 100; 
+        let totalEarnings = 0;  // Track total earnings
+        let totalDeduction = 0;  // Track total deductions
+        let totalRejectionCount = 0;  // Track rejection count
+        let scoreChart = null;
+        let earnings2 = 0
+
+        const COLORS = ['rgb(231, 24, 49)', 'rgb(239, 198, 0)', 'rgb(140, 214, 16)'];
+
+        function getColorIndex(score) {
+            return score < 50 ? 0 : score < 100 ? 1 : 2;
+        }
+
+        function initializeScoreChart() {
+            const ctx = document.getElementById("smartScoreChart").getContext("2d");
+
+            scoreChart = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: ["Score", "Remaining"],
+                    datasets: [{
+                        data: [smartScore, 200 - smartScore],
+                        backgroundColor: [COLORS[getColorIndex(smartScore)], "#f0f0f0"],
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    aspectRatio: 2,
+                    circumference: 180,
+                    rotation: -90,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false },
+                    },
+                }
+            });
+
+            document.getElementById("scoreText").innerText = `Score: ${smartScore}`;
+        }
+
+        function updateSmartScore(accepted) {
+            smartScore += accepted ? 20 : -30; 
+
+            if (scoreChart) {
+                let newColor = COLORS[getColorIndex(smartScore)];
+
+                scoreChart.data.datasets[0].data = [smartScore, 200 - smartScore];
+                scoreChart.data.datasets[0].backgroundColor[0] = newColor;
+                scoreChart.update();
+
+                document.getElementById("scoreText").innerText = `Score: ${smartScore}`;
+            }
+        }
+
+        // Update Total Earnings and Deduction
+        function updateTotalEarnings(fare, rejected = false) {
+            let deductionAmount = 0;
+
+            if (rejected) {
+                totalRejectionCount++; // Increment rejection count when ride is rejected
+
+                // Deduction logic: From 3rd rejection, 25% or ₹25, whichever is lower
+                if (totalRejectionCount === 3) {
+                    deductionAmount = Math.min(fare * 0.25, 25);  // 25% of fare or ₹25, whichever is less
+                }
+                // Deduction logic: From 4th rejection onwards, 50% or ₹50, whichever is lower
+                else if (totalRejectionCount >= 4) {
+                    deductionAmount = Math.min(fare * 0.50, 50);  // 50% of fare or ₹50, whichever is less
+                }
+
+                totalDeduction += deductionAmount; // Add to deductions
+                totalEarnings -= deductionAmount; // Deduct from earnings
+            } else {
+                totalEarnings += fare; // Add fare to earnings if accepted
+                earnings2 += fare;
+            }
+
+            document.getElementById("Earnings").innerText = `₹${earnings2}`;
+            document.getElementById("deduction").innerText = `₹${totalDeduction}`;
+            document.getElementById("totalEarnings").innerText = `₹${totalEarnings}`;
+            document.getElementById("totalDeduction").innerText = `₹${totalDeduction}`;
+            document.getElementById("rejectionCount").value = totalRejectionCount; // Update Rejection Count input
+        }
+
+        function endTrip() {
+            if (totalEarnings >= 100 && totalRejectionCount === 0) {
+                const bonus = totalEarnings * 0.15; // 15% bonus
+                totalEarnings += bonus; // Add bonus to earnings
+
+                // Update the UI with the new earnings
+                document.getElementById("Earnings").innerText = `₹${totalEarnings}`;
+                document.getElementById("totalEarnings").innerText = `₹${totalEarnings}`;
+                alert("Trip Ended! You have earned a 15% bonus on your total earnings.");
+            } else if (totalRejectionCount > 0) {
+                alert("You cannot end the trip with rejections.");
+            } else {
+                alert("Earnings must be ₹100 or more to receive a bonus.");
+            }
+
+            // Redirect to the desired URL after handling the trip
+            window.location.href = "http://127.0.0.1:5000/"; // Redirect to your URL
+        }
+
+        fetch('/get_rides/{{ zone }}')
+            .then(response => response.json())
+            .then(rides => {
+                const rideListContainer = document.querySelector('.ride-list-container');
+                let currentRideIndex = 0;
+
+                function showNextRide() {
+                    if (currentRideIndex >= rides.length) {
+                        currentRideIndex = 0;
+                    }
+                    const ride = rides[currentRideIndex];
+
+                    const rideElement = document.createElement('div');
+                    rideElement.classList.add('ride');
+                    rideElement.innerHTML = ` 
+                        <p><strong>Pickup:</strong> ${ride.pickup_location} <strong>Dropoff:</strong> ${ride.dropoff_location}</p>
+                        <p><strong>Fare:</strong> ₹${ride.fare}</p>
+                        <button class="accept-btn" onclick="handleAccept('${ride.pickup_location}', '${ride.dropoff_location}', ${ride.fare}, true)">✅ Accept</button>
+                        <button class="reject-btn" onclick="handleAccept('${ride.pickup_location}', '${ride.dropoff_location}', ${ride.fare}, false)">❌ Reject</button>
+                    `;
+                    rideListContainer.innerHTML = '';
+                    rideListContainer.appendChild(rideElement);
+                    currentRideIndex++;
+                }
+
+                showNextRide();
+                setInterval(showNextRide, 5000);
+            });
+
+        function handleAccept(pickup, dropoff, fare, accepted) {
+            if (accepted) {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const userLat = position.coords.latitude;
+                        const userLng = position.coords.longitude;
+
+                        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&waypoints=${encodeURIComponent(pickup)}&destination=${encodeURIComponent(dropoff)}`;
+
+                        window.open(googleMapsUrl, '_blank'); 
+                    });
+                }
+
+                updateSmartScore(true); 
+                updateTotalEarnings(fare); // Update earnings when the ride is accepted
+            } else {
+                if (confirm("🚨 Canceling this ride will result in a fine and reduce your Smart Score. Do you still want to cancel?")) {
+                    updateSmartScore(false);
+                    updateTotalEarnings(fare, true); // Deduct earnings when the ride is rejected
+                    document.querySelector('.ride-list-container').innerHTML = '';
+                    showNextRide();
+                }
+            }
+        }
+
+        window.onload = function () {
+            initializeScoreChart();
+        };
+    </script>
+</body>
+</html>
